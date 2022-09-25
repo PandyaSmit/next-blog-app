@@ -1,8 +1,10 @@
+import { CheckIcon, LinkIcon, PencilIcon } from '@heroicons/react/24/outline'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
+import Navbar from './navbar'
 
 const Home: NextPage = () => {
     type IBlog = {
@@ -53,47 +55,50 @@ const Home: NextPage = () => {
     }
 
     return (
-        <div className={styles.container}>
-            <Head>
-                <title>Blog | Home</title>
-                <meta name="description" content="A simple blog app" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <main className={styles.main}>
-                <h1 className={styles.title}>
-                    Welcome smit!
-                </h1>
-
-                <div className={styles.grid}>
-                    {
-                        blogs.map((blog) => {
-                            const blogForShow = prepareBlogForShow(blog);
-                            return (
-                                <a key={blogForShow._id} href={blogForShow._id} className={styles.card}>
-                                    <h2>{blogForShow.title}</h2>
-                                    <p>{blogForShow.content}</p>
-                                    <h5>{blogForShow.user.username} | {blogForShow.createdAt}</h5>
-                                </a>
-                            )
-                        })
-                    }
+        <>
+            <Navbar></Navbar>
+            <header className="bg-white shadow">
+                <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+                    <h1 className="text-3xl font-bold tracking-tight text-gray-900">Home
+                    </h1>
+                </div>
+            </header>
+            <main>
+                <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                    <h1 className={styles.title}>
+                        Welcome smit!
+                    </h1>
+                    <div className={styles.grid}>
+                        {
+                            blogs.map((blog) => {
+                                const blogForShow = prepareBlogForShow(blog);
+                                return (
+                                    <a key={blogForShow._id} href={blogForShow._id} className={styles.card}>
+                                        <h2>{blogForShow.title}</h2>
+                                        <p>{blogForShow.content}</p>
+                                        <h5>{blogForShow.user.username} | {blogForShow.createdAt}</h5>
+                                    </a>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             </main>
-
-            <footer className={styles.footer}>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by{' '}
-                    <span className={styles.logo}>
-                        <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-                    </span>
-                </a>
-            </footer>
-        </div >
+            <div className={styles.container}>
+                <footer className={styles.footer}>
+                    <a
+                        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Powered by{' '}
+                        <span className={styles.logo}>
+                            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+                        </span>
+                    </a>
+                </footer>
+            </div >
+        </>
     )
 }
 

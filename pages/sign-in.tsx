@@ -1,81 +1,92 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Router from 'next/router'
-import styles from '../styles/Home.module.css'
+import { LockClosedIcon } from '@heroicons/react/20/solid'
+import Header from './header';
 
-const Home: NextPage = () => {
-  const navigate = (url: string) => {
-    Router.push(url);
-  }
-
+const SignIn: NextPage = () => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Blog | Sign In</title>
-        <meta name="description" content="A simple blog app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <section className='h-full gradient-form bg-white-200 md:h-screen'>
-        <div className='container py-12 px-6 h-full'>
-          <div className=' flex justify-center items-center flex-wrap h-full g-6 text-gray-800'>
-            <div className=''>
-              <div className='block bg-white shadow-lg rounded-lg'>
-                <div className='lg:flex lg:flex-wrap g-0'>
-                  <div className='px-4 md:px-0'>
-                    <div className='md:p-12 md:mx-6'>
-                      <div className='text-center'>
-                        <h4 className='text-xl font-semibold mt-1 mb-12 pb-1'>
-                          Sign In
-                        </h4>
-                      </div>
-                      <form>
-                        <div className='mb-4'>
-                          <input
-                            type='email'
-                            className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
-                            placeholder='email'
-                            name='userEmail'
-                          />
-                        </div>
-                        <div className='mb-4'>
-                          <input
-                            type='password'
-                            className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
-                            placeholder='password'
-                            name='pin'
-                          />
-                        </div>
-                        <div className='text-center pt-1 mb-12 pb-1'>
-                          <button
-                            className='bg-green inline-block px-6 py-2.5 text-black font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3'
-                            type='button'
-                            onClick={() => { navigate('/home') }}
-                          >
-                            Sign In
-                          </button>
-                        </div>
-                        <div className='flex items-center justify-between pb-6'>
-                          <p className='mb-0 mr-2'>Don`&apos;`t have an account?</p>
-                          <button
-                            type='button'
-                            className='inline-block px-6 py-2 border-2 border-green-600 text-green-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out'
-                            onClick={() => { navigate('/sign-up') }}
-                          >
-                            Sign Up
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
+    <>
+      <Header></Header>
+      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md space-y-8">
+          <div>
+            <img
+              className="mx-auto h-12 w-auto"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt="Your Company"
+            />
+            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+              Sign in to your account
+            </h2>
+          </div>
+          <form className="mt-8 space-y-6" action="#" method="POST">
+            <input type="hidden" name="remember" defaultValue="true" />
+            <div className="-space-y-px rounded-md shadow-sm">
+              <div>
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="email-address"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  placeholder="Email address"
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  placeholder="Password"
+                />
               </div>
             </div>
-          </div>
+
+            {/* <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                  Remember me
+                </label>
+              </div>
+
+              <div className="text-sm">
+                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Forgot your password?
+                </a>
+              </div>
+            </div> */}
+
+            <div>
+              <button
+                type="submit"
+                className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                </span>
+                Sign in
+              </button>
+            </div>
+          </form>
         </div>
-      </section>
-    </div>
+      </div>
+    </>
   )
 }
 
-export default Home
+export default SignIn;
