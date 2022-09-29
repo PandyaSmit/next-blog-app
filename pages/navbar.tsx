@@ -1,16 +1,17 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, PencilIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, PencilIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NextPage } from 'next'
+import Router from 'next/router'
 
 const navigation = [
-    { name: 'Home', href: '#', current: true }
+    { name: 'Home', href: '/home', }
 ]
 
 const mobileNavigations = [
-    { name: 'Home', href: '#', current: true },
-    { name: 'New Post', href: '#', current: false }
+    { name: 'Home', href: '/home' },
+    { name: 'New Post', href: '/new-post' }
 ]
 
 function classNames(...classes) {
@@ -18,6 +19,10 @@ function classNames(...classes) {
 }
 
 const Navbar: NextPage = () => {
+    const navigate = (url: string) => {
+        Router.push(url);
+    }
+
     return (
         <Disclosure as="nav" className="bg-gray-800">
             {({ open }) => (
@@ -51,9 +56,9 @@ const Navbar: NextPage = () => {
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">
                                         {navigation.map((item) => (
-                                            <a
+                                            <button
                                                 key={item.name}
-                                                href={item.href}
+                                                onClick={() => { navigate(item.href) }}
                                                 className={classNames(
                                                     item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                                     'px-3 py-2 rounded-md text-sm font-medium'
@@ -61,14 +66,15 @@ const Navbar: NextPage = () => {
                                                 aria-current={item.current ? 'page' : undefined}
                                             >
                                                 {item.name}
-                                            </a>
+                                            </button>
                                         ))}
                                     </div>
                                 </div>
                             </div>
-                            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                            <div className="absolute inset-y-0 right-1 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 <span className="hidden sm:block">
                                     <button
+                                        onClick={() => { navigate('/new-post') }}
                                         type="button"
                                         className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     >
@@ -76,13 +82,13 @@ const Navbar: NextPage = () => {
                                         New Post
                                     </button>
                                 </span>
-                                <button
+                                {/* <button
                                     type="button"
                                     className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                 >
                                     <span className="sr-only">View notifications</span>
                                     <BellIcon className="h-6 w-6" aria-hidden="true" />
-                                </button>
+                                </button> */}
 
                                 {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">
@@ -149,7 +155,7 @@ const Navbar: NextPage = () => {
                                 <Disclosure.Button
                                     key={item.name}
                                     as="a"
-                                    href={item.href}
+                                    onClick={() => { navigate(item.href) }}
                                     className={classNames(
                                         item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                         'block px-3 py-2 rounded-md text-base font-medium'

@@ -1,6 +1,4 @@
-import { CheckIcon, LinkIcon, PencilIcon } from '@heroicons/react/24/outline'
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
@@ -25,10 +23,10 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         loadBlogs()
-    })
+    }, [])
 
     const loadBlogs = async () => {
-        const response = await fetch('/api');
+        const response = await fetch('/api/blogs');
 
         if (!response.ok) {
             setBlogs([]);
