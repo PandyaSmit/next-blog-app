@@ -6,15 +6,15 @@ import { NextPage } from 'next'
 import Router from 'next/router'
 
 const navigation = [
-    { name: 'Home', href: '/home', }
+    { name: 'Home', href: '/home', current: false }
 ]
 
 const mobileNavigations = [
-    { name: 'Home', href: '/home' },
+    { name: 'Home', href: '/home', current: false },
     { name: 'New Post', href: '/new-post' }
 ]
 
-function classNames(...classes) {
+function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 
