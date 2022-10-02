@@ -33,7 +33,7 @@ const Home: NextPage = () => {
         }
 
         const body = await response.json();
-        setBlogs(body.blogs);
+        setBlogs(body);
     }
 
     const prepareBlogForShow = (blog: IBlog) => {

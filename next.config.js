@@ -4,6 +4,9 @@ const nextConfig = {
   swcMinify: true,
   images: {
     unoptimized: true
+  },
+  env: {
+    MONGO_DB_URL: process.env.MONGO_DB_URL,
   }
 }
 

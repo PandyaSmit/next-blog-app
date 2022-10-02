@@ -1,54 +1,79 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-type IBlog = {
-    _id: string;
-    title: string;
-    content: string;
-    authorId: string;
-    createdAt: string;
-    updatedAt: string;
-    user: {
-        _id: string;
-        username: string;
-        email: string;
-    };
-}
-
-type IBlogsResponse = {
-    blogs: IBlog[]
-}
+import { IBlogDetails } from '../dtos/IBlogs';
+import { blogsService } from '../services/BlogsService';
 
 export class BlogsController {
-    static async getBlogs(req: NextApiRequest, res: NextApiResponse<IBlogsResponse>) {
-        const blogs: IBlog[] = [{
-            _id: '123',
-            title: 'First Blog',
-            content: 'this is my first blog',
-            authorId: '123',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            user: {
-                _id: '123',
-                username: 'smit',
-                email: 'smitpandya20@gmail.com'
-            }
-        }];
-        res.status(200).json({ blogs });
+    static async getBlogs(req: NextApiRequest, res: NextApiResponse) {
+        try {
+            const blogs: IBlogDetails[] = await blogsService.getBlogs();
+            res.status(200).json(blogs);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'please try again' });
+        }
     }
 
     static async createBlog(req: NextApiRequest, res: NextApiResponse) {
-        res.status(200).json({ message: 'blog created' });
+        try {
+            await blogsService.createBlog(req.body);
+            res.status(200).json({ message: 'blog created' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'please try again' });
+        }
     }
 
-    static updateBlog(req: NextApiRequest, res: NextApiResponse) {
-        res.status(200).json({ message: 'update blog working' });
+    static async updateBlog(req: NextApiRequest, res: NextApiResponse) {
+        try {
+            const id = req.query.id?.toString();
+
+            if (!id) {
+                return res.status(200).json({ message: 'id is required' });
+            }
+
+            await blogsService.updateBlog(id, req.body);
+            res.status(200).json({ message: 'blog updated' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'please try again' });
+        }
     }
 
-    static getBlogById(req: NextApiRequest, res: NextApiResponse) {
-        res.status(200).json({ message: 'get blog by id working' });
+    static async getBlogById(req: NextApiRequest, res: NextApiResponse) {
+        try {
+            const id = req.query.id?.toString();
+
+            if (!id) {
+                return res.status(200).json({ message: 'id is required' });
+            }
+
+            const blog = await blogsService.getBlogById(id);
+
+            if (!blog) {
+                return res.status(404).json({ error: 'blog not found' });
+            }
+
+            res.status(200).json(blog);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'please try again' });
+        }
     }
 
-    static removeBlogById(req: NextApiRequest, res: NextApiResponse) {
-        res.status(200).json({ message: 'remove blog working' });
+    static async removeBlogById(req: NextApiRequest, res: NextApiResponse) {
+        try {
+            const id = req.query.id?.toString();
+
+            if (!id) {
+                return res.status(200).json({ message: 'id is required' });
+            }
+
+            await blogsService.removeBlogById(id);
+
+            res.status(200).json({ message: 'blog removed' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'please try again' });
+        }
     }
 }
