@@ -2,6 +2,7 @@
 
 declare global {
     var Blogs: any;
+    var Users: any;
 }
 
 export { };

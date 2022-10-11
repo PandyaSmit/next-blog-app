@@ -11,7 +11,7 @@ const navigation = [
 
 const mobileNavigations = [
     { name: 'Home', href: '/home', current: false },
-    { name: 'New Post', href: '/new-post' }
+    { name: 'New Post', href: '/posts/new' }
 ]
 
 function classNames(...classes: any) {
@@ -74,7 +74,7 @@ const Navbar: NextPage = () => {
                             <div className="absolute inset-y-0 right-1 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 <span className="hidden sm:block">
                                     <button
-                                        onClick={() => { navigate('/new-post') }}
+                                        onClick={() => { navigate('/posts/new') }}
                                         type="button"
                                         className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     >

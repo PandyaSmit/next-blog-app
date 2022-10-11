@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import Navbar from "./navbar";
+import Navbar from "../navbar";
 import Router from 'next/router'
 import { useState } from "react";
 import { ExclamationTriangleIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
