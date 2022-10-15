@@ -19,6 +19,10 @@ class AuthService {
         return await UsersModel.findOne({ username }).lean();
     }
 
+    async getUser(findOptions: any): Promise<IUserDetails> {
+        return await UsersModel.findOne(findOptions).lean();
+    }
+
     async removeUserById(id: string) {
         const updateOptions = {
             isDeleted: true,

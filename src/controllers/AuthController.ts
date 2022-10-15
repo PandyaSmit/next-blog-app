@@ -22,12 +22,24 @@ export class AuthController {
 
     static async createUser(req: NextApiRequest, res: NextApiResponse) {
         try {
-            let user = authService.getUserByUsername(req.body.username);
+            const findOptions = {
+                $or: [
+                    {
+                        username: req.body.username
+                    },
+                    {
+                        email: req.body.email
+                    }
+                ]
+            };
 
-            if (user) {
+            const user = await authService.getUser(findOptions);
 
+            if (user && user.email === req.body.email) {
+                return res.status(409).json({ error: 'email already registered' });
+            } if (user && user?.username === req.body.username) {
+                return res.status(409).json({ error: 'username already taken' });
             }
-
 
             await authService.createUser(req.body);
             res.status(200).json({ message: 'user created' });
