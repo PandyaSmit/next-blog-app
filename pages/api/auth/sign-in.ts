@@ -7,7 +7,7 @@ function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    return AuthController.authUser(req, res);
+    return AuthController.signIn(req, res);
 }
 
 export default connectDB(handler);

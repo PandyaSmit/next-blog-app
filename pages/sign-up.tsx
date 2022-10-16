@@ -24,8 +24,6 @@ const SignUp: NextPage = () => {
   const createUser = async (event: any) => {
     event.preventDefault();
 
-    console.log(user);
-
     if (!user.email || !user.password || !user.username || !user.firstName || !user.lastName) {
       showErrorBanner({
         show: true,

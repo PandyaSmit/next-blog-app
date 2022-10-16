@@ -12,11 +12,11 @@ class AuthService {
     }
 
     async getUserById(id: string) {
-        return await UsersModel.findOne({ _id: id }).lean();
+        return await UsersModel.findOne({ _id: id, isDeleted: false }).lean();
     }
 
-    async getUserByUsername(username: string): Promise<IUserDetails> {
-        return await UsersModel.findOne({ username }).lean();
+    async getUserByEmail(email: string): Promise<IUserDetails> {
+        return await UsersModel.findOne({ email, isDeleted: false }).lean();
     }
 
     async getUser(findOptions: any): Promise<IUserDetails> {
