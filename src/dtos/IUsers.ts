@@ -4,7 +4,7 @@ export type IUserDetails = {
     firstName: string;
     lastName: string;
     email: string;
-    password?: string;
+    password: string;
     status: number;
     createdAt: Date;
     updatedAt: Date;

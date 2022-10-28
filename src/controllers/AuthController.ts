@@ -1,20 +1,49 @@
 import _ from 'lodash';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { IUserDetails } from '../dtos/IUsers';
 import { authService } from '../services/AuthService';
+import { utilServices } from '../services/UtilServices';
 
 export class AuthController {
+    static async auth(req: NextApiRequest, res: NextApiResponse) {
+        try {
+            const auth = req.headers.authorization;
+
+            if (!auth) {
+                return res.status(400).json({ error: 'unauthorized' });
+            }
+
+            const bearerToken = auth.split('bearer' || 'Bearer')[1];
+
+            const decodedToken = utilServices.verifyToken(bearerToken);
+
+            if (!decodedToken || !decodedToken['id']) {
+                return res.status(400).json({ error: 'unauthorized' });
+            }
+
+            const user = await authService.getUserById(decodedToken['id']);
+
+            if (!user) {
+                return res.status(400).json({ error: 'unauthorized' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'please try again' });
+        }
+    }
+
     static async signIn(req: NextApiRequest, res: NextApiResponse) {
         try {
-            const user: IUserDetails = await authService.getUserByEmail(req.body.email.toLowerCase());
+            const user = await authService.getUserByEmail(req.body.email.toLowerCase());
 
             if (!user) {
                 return res.status(404).json({ error: 'user not found' });
-            } else if (user.password !== req.body.password) {
+            } else if (!utilServices.descryptPassword(req.body.password, user.password)) {
                 return res.status(400).json({ error: 'wrong password' });
             }
 
-            res.status(200).json({ message: 'aunthenticated' });
+            const token = utilServices.createToken({ id: user._id, email: user.email });
+
+            res.status(200).json({ token });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'please try again' });
@@ -44,9 +73,13 @@ export class AuthController {
                 return res.status(409).json({ error: 'username already taken' });
             }
 
-            req.body.email = req.body.email.toLowerCase();
+            const userPayload = {
+                ...req.body,
+                email: req.body.email.toLowerCase(),
+                password: utilServices.encryptPassword(req.body.password)
+            }
 
-            await authService.createUser(req.body);
+            await authService.createUser(userPayload);
             res.status(200).json({ message: 'user created' });
         } catch (error) {
             console.error(error);
