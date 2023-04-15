@@ -1,22 +1,26 @@
-import type { NextPage } from 'next'
-import { LockClosedIcon } from '@heroicons/react/20/solid'
-import Header from './header';
-import { CheckIcon, ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
-import Router from 'next/router';
+import type { NextPage } from "next";
+import { LockClosedIcon } from "@heroicons/react/20/solid";
+import Header from "./header";
+import {
+  CheckIcon,
+  ExclamationTriangleIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { useState } from "react";
+import Router from "next/router";
 
 const SignUp: NextPage = () => {
   const [user, setUser] = useState({
-    email: '',
-    username: '',
-    password: '',
-    firstName: '',
-    lastName: '',
+    email: "",
+    username: "",
+    password: "",
+    firstName: "",
+    lastName: "",
   });
 
   const [errorBanner, showErrorBanner] = useState({
     show: false,
-    message: ''
+    message: "",
   });
 
   const [sucessBanner, showSucessBanner] = useState(false);
@@ -24,10 +28,16 @@ const SignUp: NextPage = () => {
   const createUser = async (event: any) => {
     event.preventDefault();
 
-    if (!user.email || !user.password || !user.username || !user.firstName || !user.lastName) {
+    if (
+      !user.email ||
+      !user.password ||
+      !user.username ||
+      !user.firstName ||
+      !user.lastName
+    ) {
       showErrorBanner({
         show: true,
-        message: 'Please add valid details'
+        message: "Please add valid details",
       });
       return;
     }
@@ -38,23 +48,23 @@ const SignUp: NextPage = () => {
       password: event.target["password"].value,
       firstName: event.target["first-name"].value,
       lastName: event.target["last-name"].value,
-    }
+    };
 
     setUser(formData);
     const options = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
-    }
+    };
 
-    const response = await fetch('/api/auth/sign-up', options)
+    const response = await fetch("/api/auth/sign-up", options);
 
     if (response.ok) {
       showSucessBanner(true);
       setTimeout(() => {
-        navigate('/sign-in')
+        navigate("/sign-in");
       }, 2000);
 
       return;
@@ -65,36 +75,35 @@ const SignUp: NextPage = () => {
     if (body.error) {
       showErrorBanner({
         show: true,
-        message: body.error
+        message: body.error,
       });
     } else {
       showErrorBanner({
         show: true,
-        message: 'Please try again'
+        message: "Please try again",
       });
     }
-
-  }
+  };
 
   const setFieldsValue = (fieldName: string, value: string) => {
     const userDetails = {
       ...user,
-      [fieldName]: value
+      [fieldName]: value,
     };
 
     setUser(userDetails);
-  }
+  };
 
   const navigate = (url: string) => {
     Router.push(url);
-  }
+  };
 
   const resetError = () => {
     showErrorBanner({
       show: false,
-      message: ''
+      message: "",
     });
-  }
+  };
 
   return (
     <>
@@ -104,7 +113,10 @@ const SignUp: NextPage = () => {
           <div className="flex flex-wrap items-center justify-between">
             <div className="flex w-0 flex-1 items-center">
               <span className="flex rounded-lg bg-red-800 p-2">
-                <ExclamationTriangleIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                <ExclamationTriangleIcon
+                  className="h-6 w-6 text-white"
+                  aria-hidden="true"
+                />
               </span>
               <p className="ml-3 truncate font-medium text-white">
                 <span className="md:hidden">Error!</span>
@@ -133,12 +145,12 @@ const SignUp: NextPage = () => {
               </span>
               <p className="ml-3 truncate font-medium text-white">
                 <span className="md:hidden">Success!</span>
-                <span className="hidden md:inline">Blog posted sucessfully!</span>
+                <span className="hidden md:inline">Registered Sucessfully</span>
               </p>
             </div>
             <div className="order-3 mt-2 w-full flex-shrink-0 sm:order-2 sm:mt-0 sm:w-auto">
               <button
-                onClick={() => navigate('/sign-in')}
+                onClick={() => navigate("/sign-in")}
                 className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-indigo-600 shadow-sm hover:bg-indigo-50"
               >
                 Sign In
@@ -178,8 +190,8 @@ const SignUp: NextPage = () => {
                 </label>
                 <input
                   onChange={(event) => {
-                    const value = event.target.value
-                    setFieldsValue('email', value)
+                    const value = event.target.value;
+                    setFieldsValue("email", value);
                   }}
                   id="email-address"
                   name="email"
@@ -196,8 +208,8 @@ const SignUp: NextPage = () => {
                 </label>
                 <input
                   onChange={(event) => {
-                    const value = event.target.value
-                    setFieldsValue('username', value)
+                    const value = event.target.value;
+                    setFieldsValue("username", value);
                   }}
                   id="user-name"
                   name="username"
@@ -213,8 +225,8 @@ const SignUp: NextPage = () => {
                 </label>
                 <input
                   onChange={(event) => {
-                    const value = event.target.value
-                    setFieldsValue('firstName', value)
+                    const value = event.target.value;
+                    setFieldsValue("firstName", value);
                   }}
                   id="first-name"
                   name="firstname"
@@ -230,8 +242,8 @@ const SignUp: NextPage = () => {
                 </label>
                 <input
                   onChange={(event) => {
-                    const value = event.target.value
-                    setFieldsValue('lastName', value)
+                    const value = event.target.value;
+                    setFieldsValue("lastName", value);
                   }}
                   id="last-name"
                   name="lastname"
@@ -247,8 +259,8 @@ const SignUp: NextPage = () => {
                 </label>
                 <input
                   onChange={(event) => {
-                    const value = event.target.value
-                    setFieldsValue('password', value)
+                    const value = event.target.value;
+                    setFieldsValue("password", value);
                   }}
                   id="password"
                   name="password"
@@ -287,7 +299,10 @@ const SignUp: NextPage = () => {
                 className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                  <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                  <LockClosedIcon
+                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                    aria-hidden="true"
+                  />
                 </span>
                 Sign up
               </button>
@@ -296,7 +311,7 @@ const SignUp: NextPage = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default SignUp;
